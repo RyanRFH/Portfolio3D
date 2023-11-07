@@ -524,10 +524,10 @@ const generateMainPage = () => {
     createText("Ryan Foster-Hill", mainPagePos, 1.0)
 
     // Welcome message
-    createText("Hi", { x: 3.3, y: -0.2, z: 0.5 }, 0.7)
-    createText("Welcome to my portfolio", { x: -0.3, y: -1.5, z: 0.5 }, 0.7)
-    createText("W A S D", { x: 2.7, y: -4.5, z: 0.5 }, 0.5)
-    createText("TO MOVE", { x: 2.5, y: -5.5, z: 0.5 }, 0.5)
+    createText("Hi", { x: 3.3, y: -0.2, z: 0 }, 0.7)
+    createText("Welcome to my portfolio", { x: -0.3, y: -1.5, z: 0 }, 0.7)
+    createText("W A S D", { x: 2.7, y: -4.5, z: 0 }, 0.5)
+    createText("TO MOVE", { x: 2.5, y: -5.5, z: 0 }, 0.5)
 }
 
 const generateTechPage = () => {
