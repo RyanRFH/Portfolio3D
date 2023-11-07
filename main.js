@@ -25,24 +25,24 @@ console.log(threejsCanvas)
 //Load textures
 const textureLoader = new THREE.TextureLoader()
 
-// const backgroundTexture = textureLoader.load('./assets/textures/Lava_005_SD/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner.jpg')
+// const backgroundTexture = textureLoader.load('assets/textures/Lava_005_SD/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner.jpg')
 
 
-// const fontTexture = textureLoader.load('./assets/textures/cloth-textile-texture-background-close-up-fabric-83992189.jpg')
-// const fontDisplacement = textureLoader.load('./assets/textures/White_Marble_005_SD/White_Marble_005_DISP.png')
-// const fontNormal = textureLoader.load('./assets/textures/White_Marble_005_SD/White_Marble_005_NORM.jpg')
-// const fontOcclusion = textureLoader.load('./assets/textures/White_Marble_005_SD/White_Marble_005_OCC.jpg')
-// const fontSpec = textureLoader.load('./assets/textures/White_Marble_005_SD/Abstract_004_SPEC.jpg')
-// const fontHeight = textureLoader.load('./assets/textures/White_Marble_005_SD/Marble_White_005_height.png')
-// const fontRoughness = textureLoader.load('./assets/textures/White_Marble_005_SD/White_Marble_005_ROUGH.jpg')
+// const fontTexture = textureLoader.load('assets/textures/cloth-textile-texture-background-close-up-fabric-83992189.jpg')
+// const fontDisplacement = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_DISP.png')
+// const fontNormal = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_NORM.jpg')
+// const fontOcclusion = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_OCC.jpg')
+// const fontSpec = textureLoader.load('assets/textures/White_Marble_005_SD/Abstract_004_SPEC.jpg')
+// const fontHeight = textureLoader.load('assets/textures/White_Marble_005_SD/Marble_White_005_height.png')
+// const fontRoughness = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_ROUGH.jpg')
 
 let skyBoxMaterialArray = []
-const skyBoxTextureFT = textureLoader.load("./assets/textures/ulukai/corona_ft.png")
-const skyBoxTextureBK = textureLoader.load("./assets/textures/ulukai/corona_bk.png")
-const skyBoxTextureUP = textureLoader.load("./assets/textures/ulukai/corona_up.png")
-const skyBoxTextureDN = textureLoader.load("./assets/textures/ulukai/corona_dn.png")
-const skyBoxTextureRT = textureLoader.load("./assets/textures/ulukai/corona_rt.png")
-const skyBoxTextureLF = textureLoader.load("./assets/textures/ulukai/corona_lf.png")
+const skyBoxTextureFT = textureLoader.load("assets/textures/ulukai/corona_ft.png")
+const skyBoxTextureBK = textureLoader.load("assets/textures/ulukai/corona_bk.png")
+const skyBoxTextureUP = textureLoader.load("assets/textures/ulukai/corona_up.png")
+const skyBoxTextureDN = textureLoader.load("assets/textures/ulukai/corona_dn.png")
+const skyBoxTextureRT = textureLoader.load("assets/textures/ulukai/corona_rt.png")
+const skyBoxTextureLF = textureLoader.load("assets/textures/ulukai/corona_lf.png")
 skyBoxMaterialArray.push(new THREE.MeshStandardMaterial({ map: skyBoxTextureFT, side: THREE.BackSide }))
 skyBoxMaterialArray.push(new THREE.MeshStandardMaterial({ map: skyBoxTextureBK, side: THREE.BackSide }))
 skyBoxMaterialArray.push(new THREE.MeshStandardMaterial({ map: skyBoxTextureUP, side: THREE.BackSide }))
@@ -50,18 +50,18 @@ skyBoxMaterialArray.push(new THREE.MeshStandardMaterial({ map: skyBoxTextureDN, 
 skyBoxMaterialArray.push(new THREE.MeshStandardMaterial({ map: skyBoxTextureRT, side: THREE.BackSide }))
 skyBoxMaterialArray.push(new THREE.MeshStandardMaterial({ map: skyBoxTextureLF, side: THREE.BackSide }))
 
-const cubeTexture = textureLoader.load('./assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_basecolor.jpg')
-const cubeNormal = textureLoader.load('./assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_normal.jpg')
-const cubeMetal = textureLoader.load('./assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_metallic.jpg')
-const cubeRoughness = textureLoader.load('./assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_roughness.jpg')
-const cubeEmissive = textureLoader.load('./assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_emissive.jpg')
+const cubeTexture = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_basecolor.jpg')
+const cubeNormal = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_normal.jpg')
+const cubeMetal = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_metallic.jpg')
+const cubeRoughness = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_roughness.jpg')
+const cubeEmissive = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_emissive.jpg')
 
-const sphereTexture = textureLoader.load('./assets/textures/Lava_005_SD/Lava_005_COLOR.jpg')
-const sphereNormal = textureLoader.load('./assets/textures/Lava_005_SD/Lava_005_NORM.jpg')
-const sphereRoughness = textureLoader.load('./assets/textures/Lava_005_SD/Lava_005_ROUGH.jpg')
-const sphereDisplacement = textureLoader.load('./assets/textures/Lava_005_SD/Lava_005_DISP.png')
-const sphereAO = textureLoader.load('./assets/textures/Lava_005_SD/Lava_005_OCC.jpg')
-const sphereAlpha = textureLoader.load('./assets/textures/Lava_005_SD/Lava_005_MASK.jpg')
+const sphereTexture = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_COLOR.jpg')
+const sphereNormal = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_NORM.jpg')
+const sphereRoughness = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_ROUGH.jpg')
+const sphereDisplacement = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_DISP.png')
+const sphereAO = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_OCC.jpg')
+const sphereAlpha = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_MASK.jpg')
 
 //Handles loading screen
 let gameIsLoading = true;
@@ -103,7 +103,7 @@ document.body.appendChild(labelRenderer.domElement)
 const modelLoader = new GLTFLoader();
 
 let carModel
-modelLoader.load("./assets/models/free_1975_porsche_911_930_turbo/scene.gltf", (gltf) => {
+modelLoader.load("assets/models/free_1975_porsche_911_930_turbo/scene.gltf", (gltf) => {
     carModel = gltf.scene
     scene.add(gltf.scene)
     carModel.position.set(40, 1, -5)
@@ -114,7 +114,7 @@ modelLoader.load("./assets/models/free_1975_porsche_911_930_turbo/scene.gltf", (
 
 
 let shipModel
-modelLoader.load("./assets/models/stylised_spaceship/scene.gltf", (gltf) => {
+modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
     shipModel = gltf.scene
     shipModel.scale.set(0.1, 0.1, 0.1)
     shipModel.position.set(3.5, -3, 0)
@@ -126,7 +126,7 @@ modelLoader.load("./assets/models/stylised_spaceship/scene.gltf", (gltf) => {
 })
 
 let eggModel
-modelLoader.load("./assets/models/easter_eggs_2016_-_white__red_-_1/scene.gltf", (gltf) => {
+modelLoader.load("assets/models/easter_eggs_2016_-_white__red_-_1/scene.gltf", (gltf) => {
     eggModel = gltf.scene
     scene.add(gltf.scene)
     eggModel.position.set(700, -1, -10)
@@ -175,7 +175,7 @@ const loadingScreenPointLight = new THREE.AmbientLight(0xFFFFFF, 10)
 loadingScreenPointLight.penumbra = 1
 loadingScreenScene.add(loadingScreenPointLight)
 // const audioLoader = new THREE.AudioLoader();
-// audioLoader.load('./assets/sounds/', function (buffer) {
+// audioLoader.load('assets/sounds/', function (buffer) {
 //     sound.setBuffer(buffer);
 //     sound.setLoop(true);
 //     sound.setVolume(0.1);
@@ -310,7 +310,7 @@ const createText = (textToDisplay, textPosition, fontSize) => {
     const loader = new FontLoader();
     loader.load(
         //Font to be loaded
-        './assets/fonts/Bebas_Neue_Regular.json',
+        'assets/fonts/Bebas_Neue_Regular.json',
         //Creates properties for font
         function (font) {
             const textGeometry = new TextGeometry(textToDisplay, {
@@ -344,7 +344,7 @@ const createTextLoadingScreen = (textToDisplay, textPosition, fontSize) => {
     const loader = new FontLoader();
     loader.load(
         //Font to be loaded
-        './assets/fonts/Comfortaa_Regular.json',
+        'assets/fonts/Comfortaa_Regular.json',
         //Creates properties for font
         function (font) {
             const textGeometry = new TextGeometry(textToDisplay, {
@@ -390,7 +390,7 @@ const controlShip = () => {
         // if (shipStartAudioPlayed === false) {
         //     const audioLoader = new THREE.AudioLoader();
         //     shipModel.add(sound)
-        //     audioLoader.load( './assets/sounds/futuristic-sound-96179.mp3', function( buffer ) {
+        //     audioLoader.load( 'assets/sounds/futuristic-sound-96179.mp3', function( buffer ) {
         //         sound.setBuffer( buffer );
         //         sound.setRefDistance( 10 );
         //         sound.play();
@@ -541,7 +541,7 @@ const generateTechPage = () => {
 const generateProjectsPage = () => {
     createText("Projects ->", projectsPagePos, 1.0)
     const calcImg = document.createElement('img')
-    calcImg.src = "./assets/images/Screenshot_calculator.png"
+    calcImg.src = "assets/images/Screenshot_calculator.png"
     calcImg.width = 500
     const calcImgObj = new CSS2DObject(calcImg)
     scene.add(calcImgObj)
@@ -549,7 +549,7 @@ const generateProjectsPage = () => {
     createText("React Calculator",{x:60.7,y:-7,z:0} , 1.0)
 
     const catsImg = document.createElement('img')
-    catsImg.src = "./assets/images/Screenshot_cats.png"
+    catsImg.src = "assets/images/Screenshot_cats.png"
     catsImg.width = 1300
     const catsImgObj = new CSS2DObject(catsImg)
     scene.add(catsImgObj)
@@ -557,7 +557,7 @@ const generateProjectsPage = () => {
     createText("React E-Commerce Site",{x:79,y:-7,z:0} , 1.0)
 
     const musikaImg = document.createElement('img')
-    musikaImg.src = "./assets/images/Screenshot_musika.png"
+    musikaImg.src = "assets/images/Screenshot_musika.png"
     musikaImg.width = 1300
     const musikaImgObj = new CSS2DObject(musikaImg)
     scene.add(musikaImgObj)
@@ -565,7 +565,7 @@ const generateProjectsPage = () => {
     createText("React Music Website",{x:110,y:-7,z:0} , 1.0)
 
     const diceImg = document.createElement('img')
-    diceImg.src = "./assets/images/Screenshot_dicegame.png"
+    diceImg.src = "assets/images/Screenshot_dicegame.png"
     diceImg.width = 1300
     const diceImgObj = new CSS2DObject(diceImg)
     scene.add(diceImgObj)
@@ -573,7 +573,7 @@ const generateProjectsPage = () => {
     createText("JS Dice Game",{x:142,y:-6,z:0} , 1.0)
 
     const sandyImg = document.createElement('img')
-    sandyImg.src = "./assets/images/Screenshot_sandyandeli.png"
+    sandyImg.src = "assets/images/Screenshot_sandyandeli.png"
     sandyImg.width = 1400
     const sandyImgObj = new CSS2DObject(sandyImg)
     scene.add(sandyImgObj)
@@ -582,7 +582,7 @@ const generateProjectsPage = () => {
 
 
     const todoImg = document.createElement('img')
-    todoImg.src = "./assets/images/Screenshot_todolist.png"
+    todoImg.src = "assets/images/Screenshot_todolist.png"
     todoImg.width = 1700
     const todoImgObj = new CSS2DObject(todoImg)
     scene.add(todoImgObj)
