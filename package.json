@@ -7,9 +7,9 @@
   "license": "ISC",
   
   "scripts": {
-    "start": "parcel serve --open",
-    "build": "parcel build",
-    "deploy": "gh-pages -d dist"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "gh-pages": "^6.0.0",
