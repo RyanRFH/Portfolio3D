@@ -1,0 +1,11 @@
+Model Information:
+* title:	Easter Egg Challenge 2019
+* source:	https://sketchfab.com/3d-models/easter-egg-challenge-2019-7e57b0623c534ca88a47e7e2c00c625c
+* author:	Thomas Flynn (https://sketchfab.com/nebulousflynn)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Easter Egg Challenge 2019" (https://sketchfab.com/3d-models/easter-egg-challenge-2019-7e57b0623c534ca88a47e7e2c00c625c) by Thomas Flynn (https://sketchfab.com/nebulousflynn) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
