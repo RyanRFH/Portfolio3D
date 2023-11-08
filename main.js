@@ -527,8 +527,8 @@ const generateMainPage = () => {
     createText("Hi", { x: 3.3, y: -0.2, z: 0 }, 0.7)
     createText("Welcome to my portfolio", { x: -0.3, y: -1.5, z: 0 }, 0.7)
     createText("W A S D", { x: 2.7, y: -4.5, z: 0 }, 0.5)
-    createText("TO MOVE", { x: 2.5, y: -5.5, z: 0 }, 0.5)
-    createText("[ Please set page zoom to 100% ]", { x: 0.9, y: -6.5, z: 0 }, 0.4)
+    createText("TO MOVE", { x: 2.5, y: -5.2, z: 0 }, 0.5)
+    createText("[ Please set page zoom to 100% ]", { x: 0.65, y: -6, z: 0 }, 0.4)
 }
 
 const generateTechPage = () => {
