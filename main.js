@@ -102,15 +102,16 @@ document.body.appendChild(labelRenderer.domElement)
 //Load models
 const modelLoader = new GLTFLoader();
 
-let carModel
-modelLoader.load("assets/models/free_1975_porsche_911_930_turbo/scene.gltf", (gltf) => {
-    carModel = gltf.scene
-    scene.add(gltf.scene)
-    carModel.position.set(40, 1, -5)
-    gameIsLoading = false //Turn off loading screen
-}, undefined, function (error) {
-    console.log("Error in model loader = ", error)
-})
+//Too laggy
+// let carModel
+// modelLoader.load("assets/models/free_1975_porsche_911_930_turbo/scene.gltf", (gltf) => {
+//     carModel = gltf.scene
+//     // scene.add(gltf.scene)
+//     carModel.position.set(40, 1, -5)
+//     // gameIsLoading = false //Turn off loading screen
+// }, undefined, function (error) {
+//     console.log("Error in model loader = ", error)
+// })
 
 
 let shipModel
@@ -120,6 +121,7 @@ modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
     shipModel.position.set(3.5, -3, 0)
     // shipModel.position.set(240, -3, 0) //Page editing position
     shipModel.rotateY(1.7000000)
+    gameIsLoading = false //Turn off loading screen
     scene.add(gltf.scene)
 }, undefined, function (error) {
     console.log("Error in model loader = ", error)
@@ -643,7 +645,7 @@ function animate() {
 
         rotateSphere()
         rotateCube()
-        rotateCar()
+        // rotateCar()
         moveShip()
         easterEgg()
 
