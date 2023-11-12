@@ -187,7 +187,7 @@ loadingScreenScene.add(loadingScreenPointLight)
 // wholeSceneLight.position.set(0, 0, 0)
 // scene.add(wholeSceneLight)
 
-const mainShipPointLight = new THREE.SpotLight(0xFFFFFF, 3, 0, 0.8)
+const mainShipPointLight = new THREE.SpotLight(0xFFFFFF, 3, 0, 1)
 mainShipPointLight.position.set(0, 0, 0)
 mainShipPointLight.penumbra = 1
 mainShipPointLight.decay = 0.0
