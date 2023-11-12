@@ -156,31 +156,33 @@ camera.position.set(5, -0.5, 10);
 
 
 //Create audio
-// const listener = new THREE.AudioListener();
-// camera.add(listener)
-// const sound = new THREE.PositionalAudio(listener);
+const bgMusicListener = new THREE.AudioListener();
+camera.add(bgMusicListener)
+const bgMusicSound = new THREE.PositionalAudio(bgMusicListener);
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load('assets/sounds/wandering-6394.mp3', function (buffer) {
+    bgMusicSound.setBuffer(buffer);
+    bgMusicSound.setLoop(true);
+    bgMusicSound.setVolume(3);
+    bgMusicSound.play();
+});
+
 
 //Add lighting
 const loadingScreenPointLight = new THREE.AmbientLight(0xFFFFFF, 5)
 loadingScreenPointLight.penumbra = 1
 loadingScreenScene.add(loadingScreenPointLight)
-// const audioLoader = new THREE.AudioLoader();
-// audioLoader.load('assets/sounds/', function (buffer) {
-//     sound.setBuffer(buffer);
-//     sound.setLoop(true);
-//     sound.setVolume(0.1);
-//     sound.play();
-// });
+
 
 // const wholeSceneLight = new THREE.AmbientLight(0xFFFFFF, 0.2)
 // wholeSceneLight.position.set(0, 0, 0)
 // scene.add(wholeSceneLight)
 
-const mainShipPointLight = new THREE.SpotLight(0xFFFFFF, 4, 0, 1)
-mainShipPointLight.position.set(0, 0, 0)
-mainShipPointLight.penumbra = 1
-mainShipPointLight.decay = 0.0
-scene.add(mainShipPointLight)
+const mainShipSpotLight = new THREE.SpotLight(0xFFFFFF, 10, 0, 1)
+mainShipSpotLight.position.set(0, 0, 0)
+mainShipSpotLight.penumbra = 1
+mainShipSpotLight.decay = 0.0
+scene.add(mainShipSpotLight)
 
 
 const easterEggPointLight = new THREE.SpotLight(0xFFFFFF, 500)
@@ -208,7 +210,7 @@ const thankyouPagePos = new THREE.Vector3(250, 0, 0)
 
 
 //Create light helper (shows position of light)
-// const lightHelper = new THREE.SpotLightHelper(easterEggPointLight)
+// const lightHelper = new THREE.SpotLightHelper(mainShipSpotLight)
 // scene.add(lightHelper)
 
 // const lightHelper2 = new THREE.SpotLightHelper(easterEggPointLight2)
@@ -298,36 +300,51 @@ const createTextLoadingScreen = (textToDisplay, textPosition, fontSize) => {
 
 
 let shipXMomentum = 0.0
-let shipStartAudioPlayed = false
+const shipSoundListener = new THREE.AudioListener();
+const shipSound = new THREE.PositionalAudio(shipSoundListener);
+const audioLoader2 = new THREE.AudioLoader();
+
 const controlShip = () => {
     document.addEventListener("keypress", (event) => {
         if (event.key === "w") {
             // shipXMomentum += 0.006
-            shipXMomentum += 0.0005
+            shipXMomentum += 0.0002
+            shipModel.add(shipSound)
+            console.log(shipSound.isPlaying)
+            if (!shipSound.isPlaying) {
+                console.log("func is running")
+                audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
+                    shipSound.setBuffer(buffer);
+                    shipSound.setRefDistance(10);
+                    shipSound.setLoop(true);
+                    shipSound.setVolume(0.2);
+                    shipSound.duration = 40
+                    shipSound.play();
+                });
+            }
+
         } else if (event.key === "s") {
             // shipXMomentum -= 0.006
-            shipXMomentum -= 0.0005
+            shipXMomentum -= 0.0002
+            if (!shipSound.isPlaying) {
+                console.log("func is running")
+                audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
+                    shipSound.setBuffer(buffer);
+                    shipSound.setRefDistance(10);
+                    shipSound.setLoop(true);
+                    shipSound.setVolume(0.2);
+                    shipSound.duration = 40
+                    shipSound.play();
+                });
+            }
         } else if (event.key === "a") {
             shipModel.rotateX(-0.03)
         } else if (event.key === "d") {
             shipModel.rotateX(0.03)
         }
-
-        //Add audio
-        // if (shipStartAudioPlayed === false) {
-        //     const audioLoader = new THREE.AudioLoader();
-        //     shipModel.add(sound)
-        //     audioLoader.load( 'assets/sounds/futuristic-sound-96179.mp3', function( buffer ) {
-        //         sound.setBuffer( buffer );
-        //         sound.setRefDistance( 10 );
-        //         sound.play();
-        //         sound.setVolume(0.1)
-        //     });
-
-        //     shipStartAudioPlayed = true
-        // }
     })
 }
+
 
 const moveShip = () => {
     shipModel.translateZ(shipXMomentum)
@@ -353,23 +370,22 @@ const moveShip = () => {
 }
 
 
-// scene.add( mainShipPointLight.target );
-
-// mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z,)
-
 let mainLightTargetSet = false
 const moveMainShipLight = () => {
-    if (mainShipPointLight) {
+    if (mainShipSpotLight) {
         if (mainLightTargetSet === false) {
-            mainShipPointLight.target = shipModel
+            mainShipSpotLight.target = shipModel
             mainLightTargetSet = true
         }
-        mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z)
-        mainShipPointLight.position.y = shipModel.position.y
+        mainShipSpotLight.position.set(camera.position.x, camera.position.y, camera.position.z)
+        mainShipSpotLight.position.y = -5
+        mainShipSpotLight.position.z = 8
     }
 
 
 }
+
+
 //Audio Controller
 const audioController = () => {
 
@@ -477,10 +493,10 @@ const generateLoadingScreen = () => {
 
 const generateOpeningPage = () => {
     let wasdPos = { x: -21.9, y: 1.5, z: 0 }
-    createText("W", {x: wasdPos.x, y: wasdPos.y, z: wasdPos.z}, 1)
-    createText("A", {x: wasdPos.x - 0.8, y: wasdPos.y - 1.5, z: wasdPos.z}, 1)
-    createText("S", {x: wasdPos.x + 0.1, y: wasdPos.y - 1.5, z: wasdPos.z}, 1)
-    createText("D", {x: wasdPos.x + 1, y: wasdPos.y - 1.5, z: wasdPos.z}, 1)
+    createText("W", { x: wasdPos.x, y: wasdPos.y, z: wasdPos.z }, 1)
+    createText("A", { x: wasdPos.x - 0.8, y: wasdPos.y - 1.5, z: wasdPos.z }, 1)
+    createText("S", { x: wasdPos.x + 0.1, y: wasdPos.y - 1.5, z: wasdPos.z }, 1)
+    createText("D", { x: wasdPos.x + 1, y: wasdPos.y - 1.5, z: wasdPos.z }, 1)
     createText("TO MOVE", { x: -23.5, y: -1.5, z: 0 }, 1)
     createText("[ Please set page zoom to 100% ]", { x: -27.5, y: -5, z: 0 }, 0.8)
     createText("-->", { x: -17, y: -1.5, z: 0 }, 1)
@@ -570,6 +586,8 @@ const generateThankyouPage = () => {
 // DISABLE CAPS LOCK WARNING MESSAGE
 //ADD SPOTLIGHT ROTATING SOMEWHERE
 //start ship to left
+
+//READD MUSIC
 
 
 //Setup site functionality
