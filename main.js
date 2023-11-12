@@ -74,7 +74,6 @@ const centerOfSpace = new THREE.Vector3(0, 0, 0)
 const scene = new THREE.Scene();
 
 
-
 //Setup camera and camera utilties
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const pointer = new THREE.Vector2();
@@ -101,17 +100,6 @@ document.body.appendChild(labelRenderer.domElement)
 //Load models
 const modelLoader = new GLTFLoader();
 
-//Too laggy
-// let carModel
-// modelLoader.load("assets/models/free_1975_porsche_911_930_turbo/scene.gltf", (gltf) => {
-//     carModel = gltf.scene
-//     // scene.add(gltf.scene)
-//     carModel.position.set(40, 1, -5)
-//     // gameIsLoading = false //Turn off loading screen
-// }, undefined, function (error) {
-//     console.log("Error in model loader = ", error)
-// })
-
 
 let shipModel
 modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
@@ -119,11 +107,12 @@ modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
     shipModel.scale.set(0.1, 0.1, 0.1)
     shipModel.position.set(3.5, -3, 0)
     // shipModel.position.set(240, -3, 0) //Page editing position
+
     shipModel.rotateY(1.7000000)
     gameIsLoading = false //Turn off loading screen
     scene.add(gltf.scene)
 }, undefined, function (error) {
-    console.log("Error in model loader = ", error)
+
 })
 
 let eggModel
@@ -133,7 +122,7 @@ modelLoader.load("assets/models/easter_eggs_2016_-_white__red_-_1/scene.gltf", (
     eggModel.position.set(500, -1, -10)
     eggModel.scale.set(350, 350, 350)
 }, undefined, function (error) {
-    console.log("Error in model loader = ", error)
+
 })
 
 //Create sky box
@@ -271,7 +260,7 @@ const createText = (textToDisplay, textPosition, fontSize) => {
                 height: 0.1,
             });
             const textMaterial = [
-                new THREE.MeshStandardMaterial({ color: "#27c4e6"}),
+                new THREE.MeshStandardMaterial({ color: "#27c4e6" }),
                 new THREE.MeshStandardMaterial({ color: "#156273" })
             ]
             const textMesh = new THREE.Mesh(textGeometry, textMaterial)
@@ -280,11 +269,11 @@ const createText = (textToDisplay, textPosition, fontSize) => {
         },
         //Outputs progress of font load
         function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+
         },
         //Outputs error message if font doesn't load
         function (err) {
-            console.log('An error happened');
+
         }
     );
 
@@ -311,11 +300,11 @@ const createTextLoadingScreen = (textToDisplay, textPosition, fontSize) => {
         },
         //Outputs progress of font load
         function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+
         },
         //Outputs error message if font doesn't load
         function (err) {
-            console.log('An error happened');
+
         }
     );
 
@@ -384,11 +373,14 @@ const moveShip = () => {
 
 let mainLightTargetSet = false
 const moveMainShipLight = () => {
-    if (mainLightTargetSet === false) {
-        mainShipPointLight.target = shipModel
-        mainLightTargetSet = true
+    if (mainShipPointLight) {
+        if (mainLightTargetSet === false) {
+            mainShipPointLight.target = shipModel
+            mainLightTargetSet = true
+        }
+        mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z)
     }
-    mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z)
+
 
 }
 //Audio Controller
@@ -398,15 +390,19 @@ const audioController = () => {
 
 //Easter egg
 const easterEgg = () => {
-    // easterEggPointLight?.lookAt(eggModel.position)
-    easterEggPointLight.target = eggModel
-    easterEggPointLight2.target = eggModel
-    easterEggPointLight.position.x = eggModel?.position.x - 10
-    easterEggPointLight2.position.x = eggModel?.position.x + 10
-    if (shipModel.position.x > 460 && shipModel.position.x < 495) {
-        shipXMomentum = 0.01
+    if (eggModel) {
+        // easterEggPointLight?.lookAt(eggModel.position)
+        easterEggPointLight.target = eggModel
+        easterEggPointLight2.target = eggModel
+        easterEggPointLight.position.x = eggModel?.position.x - 10
+        easterEggPointLight2.position.x = eggModel?.position.x + 10
+        if (shipModel.position.x > 460 && shipModel.position.x < 495) {
+            shipXMomentum = 0.01
+        }
+
+        eggModel.rotateY(0.0005)
     }
-    eggModel.rotateY(0.0005)
+
 }
 
 //Controls cube movement
