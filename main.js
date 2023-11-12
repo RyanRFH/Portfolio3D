@@ -105,7 +105,7 @@ let shipModel
 modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
     shipModel = gltf.scene
     shipModel.scale.set(0.1, 0.1, 0.1)
-    shipModel.position.set(3.5, -3, 0)
+    shipModel.position.set(-21.5, -3, 0)
     // shipModel.position.set(240, -3, 0) //Page editing position
 
     shipModel.rotateY(1.7000000)
@@ -176,7 +176,7 @@ loadingScreenScene.add(loadingScreenPointLight)
 // wholeSceneLight.position.set(0, 0, 0)
 // scene.add(wholeSceneLight)
 
-const mainShipPointLight = new THREE.SpotLight(0xFFFFFF, 3, 0, 1)
+const mainShipPointLight = new THREE.SpotLight(0xFFFFFF, 4, 0, 1)
 mainShipPointLight.position.set(0, 0, 0)
 mainShipPointLight.penumbra = 1
 mainShipPointLight.decay = 0.0
@@ -196,29 +196,15 @@ scene.add(easterEggPointLight2)
 
 
 // Stored positions of pages + creating lighting targets
+const openingPagePos = new THREE.Vector3(-25, 1, 0)
+
 const mainPagePos = new THREE.Vector3(0, 1, 0)
-const mainSpotTarget = new THREE.Object3D();
-mainSpotTarget.position.set(mainPagePos.x, 1, 0)
-// mainPagePointLight.target = mainSpotTarget;
-scene.add(mainSpotTarget);
 
 const techPagePos = new THREE.Vector3(25, 1, 0)
-const techSpotTarget = new THREE.Object3D();
-techSpotTarget.position.set(techPagePos.x, 1, 0)
-// techPagePointLight.target = techSpotTarget;
-scene.add(techSpotTarget);
 
 const projectsPagePos = new THREE.Vector3(50, 0, 0)
-const projectsSpotTarget = new THREE.Object3D();
-projectsSpotTarget.position.set(projectsPagePos.x, 1, 0)
-// projectsPagePointLight.target = projectsSpotTarget;
-scene.add(projectsSpotTarget);
 
 const thankyouPagePos = new THREE.Vector3(250, 0, 0)
-const thankyouSpotTarget = new THREE.Object3D();
-thankyouSpotTarget.position.set(thankyouPagePos.x, 1, 0)
-// thankyouPagePointLight.target = thankyouSpotTarget;
-scene.add(thankyouSpotTarget);
 
 
 //Create light helper (shows position of light)
@@ -260,8 +246,8 @@ const createText = (textToDisplay, textPosition, fontSize) => {
                 height: 0.1,
             });
             const textMaterial = [
-                new THREE.MeshStandardMaterial({ color: "#27c4e6" }),
-                new THREE.MeshStandardMaterial({ color: "#156273" })
+                new THREE.MeshStandardMaterial({ color: "#B8860B", metalness: 1, roughness: 0.5, emissive: '#B8860B' }),
+                new THREE.MeshStandardMaterial({ color: "#FFD700" })
             ]
             const textMesh = new THREE.Mesh(textGeometry, textMaterial)
             textMesh.position.set(textPosition.x, textPosition.y, textPosition.z)
@@ -317,10 +303,10 @@ const controlShip = () => {
     document.addEventListener("keypress", (event) => {
         if (event.key === "w") {
             // shipXMomentum += 0.006
-            shipXMomentum += 0.0003
+            shipXMomentum += 0.0005
         } else if (event.key === "s") {
             // shipXMomentum -= 0.006
-            shipXMomentum -= 0.0003
+            shipXMomentum -= 0.0005
         } else if (event.key === "a") {
             shipModel.rotateX(-0.03)
         } else if (event.key === "d") {
@@ -379,6 +365,7 @@ const moveMainShipLight = () => {
             mainLightTargetSet = true
         }
         mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z)
+        mainShipPointLight.position.y = shipModel.position.y
     }
 
 
@@ -488,18 +475,25 @@ const generateLoadingScreen = () => {
     createTextLoadingScreen("Loading Please Wait...", { x: -3, y: 0.0, z: 0.0 }, 1.0)
 }
 
+const generateOpeningPage = () => {
+    let wasdPos = { x: -21.9, y: 1.5, z: 0 }
+    createText("W", {x: wasdPos.x, y: wasdPos.y, z: wasdPos.z}, 1)
+    createText("A", {x: wasdPos.x - 0.8, y: wasdPos.y - 1.5, z: wasdPos.z}, 1)
+    createText("S", {x: wasdPos.x + 0.1, y: wasdPos.y - 1.5, z: wasdPos.z}, 1)
+    createText("D", {x: wasdPos.x + 1, y: wasdPos.y - 1.5, z: wasdPos.z}, 1)
+    createText("TO MOVE", { x: -23.5, y: -1.5, z: 0 }, 1)
+    createText("[ Please set page zoom to 100% ]", { x: -27.5, y: -5, z: 0 }, 0.8)
+    createText("-->", { x: -17, y: -1.5, z: 0 }, 1)
+}
+
 const generateMainPage = () => {
     //Title
     createText("Ryan Foster-Hill", mainPagePos, 1.0)
 
-    createText("-->", { x: 8.5, y: -1.7, z: 0 }, 1.0)
-
     // Welcome message
     createText("Hi", { x: 3.3, y: -0.2, z: 0 }, 0.7)
     createText("Welcome to my portfolio", { x: -0.3, y: -1.5, z: 0 }, 0.7)
-    createText("W A S D", { x: 2.7, y: -4.5, z: 0 }, 0.5)
-    createText("TO MOVE", { x: 2.5, y: -5.2, z: 0 }, 0.5)
-    createText("[ Please set page zoom to 100% ]", { x: 0.65, y: -6, z: 0 }, 0.4)
+
 }
 
 const generateTechPage = () => {
@@ -575,7 +569,7 @@ const generateThankyouPage = () => {
 
 // DISABLE CAPS LOCK WARNING MESSAGE
 //ADD SPOTLIGHT ROTATING SOMEWHERE
-
+//start ship to left
 
 
 //Setup site functionality
@@ -583,6 +577,7 @@ generateLoadingScreen()
 // window.addEventListener('pointermove', changeElementColor)
 window.addEventListener('pointermove', onMouseMove)
 // cameraContolsKB()
+generateOpeningPage()
 generateMainPage()
 generateTechPage()
 generateProjectsPage()
