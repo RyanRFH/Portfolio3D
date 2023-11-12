@@ -5,7 +5,7 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { handleCameraRotation, handleMouseMovement } from './CameraWithMouseRotation';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import CameraOrientationState from './CameraOrientationState';
-import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer'
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer'
 
 // Loading a Line
 // const lineMaterial = new THREE.LineBasicMaterial( { color: 0x0000ff } );
@@ -20,7 +20,6 @@ import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRend
 
 //Canvas setup
 const threejsCanvas = document.querySelector('.webgl')
-console.log(threejsCanvas)
 
 //Load textures
 const textureLoader = new THREE.TextureLoader()
@@ -87,7 +86,7 @@ let cameraOrientationState = new CameraOrientationState();
 
 
 //Setup renderer
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
@@ -131,7 +130,7 @@ let eggModel
 modelLoader.load("assets/models/easter_eggs_2016_-_white__red_-_1/scene.gltf", (gltf) => {
     eggModel = gltf.scene
     scene.add(gltf.scene)
-    eggModel.position.set(700, -1, -10)
+    eggModel.position.set(500, -1, -10)
     eggModel.scale.set(350, 350, 350)
 }, undefined, function (error) {
     console.log("Error in model loader = ", error)
@@ -173,7 +172,7 @@ camera.position.set(5, -0.5, 10);
 // const sound = new THREE.PositionalAudio(listener);
 
 //Add lighting
-const loadingScreenPointLight = new THREE.AmbientLight(0xFFFFFF, 10)
+const loadingScreenPointLight = new THREE.AmbientLight(0xFFFFFF, 5)
 loadingScreenPointLight.penumbra = 1
 loadingScreenScene.add(loadingScreenPointLight)
 // const audioLoader = new THREE.AudioLoader();
@@ -184,110 +183,61 @@ loadingScreenScene.add(loadingScreenPointLight)
 //     sound.play();
 // });
 
-const wholeSceneLight = new THREE.AmbientLight(0xFFFFFF, 0.2)
-wholeSceneLight.position.set(0, 0, 0)
-scene.add(wholeSceneLight)
+// const wholeSceneLight = new THREE.AmbientLight(0xFFFFFF, 0.2)
+// wholeSceneLight.position.set(0, 0, 0)
+// scene.add(wholeSceneLight)
 
-const mainPagePointLight = new THREE.SpotLight(0xFFFFFF, 500)
-mainPagePointLight.position.set(10, 2, 9)
-mainPagePointLight.penumbra = 1
-scene.add(mainPagePointLight)
+const mainShipPointLight = new THREE.SpotLight(0xFFFFFF, 3, 0, 0.8)
+mainShipPointLight.position.set(0, 0, 0)
+mainShipPointLight.penumbra = 1
+mainShipPointLight.decay = 0.0
+scene.add(mainShipPointLight)
 
-const techPagePointLight = new THREE.PointLight(0xFFFFFF, 100)
-techPagePointLight.position.set(26, 4, 4)
-techPagePointLight.penumbra = 1
-scene.add(techPagePointLight)
 
-const projectsPagePointLight = new THREE.PointLight(0xFFFFFF, 100)
-projectsPagePointLight.position.set(52, 4, 4)
-projectsPagePointLight.penumbra = 1
-scene.add(projectsPagePointLight)
-
-const thankyouPagePointLight = new THREE.PointLight(0xFFFFFF, 100)
-thankyouPagePointLight.position.set(254, 4, 4)
-thankyouPagePointLight.penumbra = 1
-scene.add(thankyouPagePointLight)
-
-const easterEggPointLight = new THREE.PointLight(0xFFFFFF, 3000)
-easterEggPointLight.position.set(0, 7, 15)
+const easterEggPointLight = new THREE.SpotLight(0xFFFFFF, 500)
+easterEggPointLight.position.set(0, 1, 5)
 easterEggPointLight.penumbra = 1
 scene.add(easterEggPointLight)
 
-const easterEggPointLight2 = new THREE.PointLight(0xFFFFFF, 3000)
-easterEggPointLight2.position.set(0, 7, 15)
+
+const easterEggPointLight2 = new THREE.SpotLight(0xFFFFFF, 500)
+easterEggPointLight2.position.set(0, 1, 5)
 easterEggPointLight2.penumbra = 1
 scene.add(easterEggPointLight2)
-
-const shipLight = new THREE.PointLight(0xFFFFFF, 50)
-shipLight.position.set(200, 1000, -10) //Offscreen
-shipLight.penumbra = 1
-scene.add(shipLight)
-
-const calculatorLight = new THREE.PointLight(0xFFFFFF, 50)
-calculatorLight.position.set(65, -3, 0)
-calculatorLight.penumbra = 1
-scene.add(calculatorLight)
-
-const catsLight = new THREE.PointLight(0xFFFFFF, 50)
-catsLight.position.set(84, -3, 0)
-catsLight.penumbra = 1
-scene.add(catsLight)
-
-const musikaLight = new THREE.PointLight(0xFFFFFF, 50)
-musikaLight.position.set(115, -3, 0)
-musikaLight.penumbra = 1
-scene.add(musikaLight)
-
-const diceLight = new THREE.PointLight(0xFFFFFF, 50)
-diceLight.position.set(145, -3, 0)
-diceLight.penumbra = 1
-scene.add(diceLight)
-
-const sandyLight = new THREE.PointLight(0xFFFFFF, 100)
-sandyLight.position.set(175, -2, 0)
-sandyLight.penumbra = 1
-scene.add(sandyLight)
-
-const todoLight = new THREE.PointLight(0xFFFFFF, 50)
-todoLight.position.set(210, -1, 0)
-todoLight.penumbra = 1
-scene.add(todoLight)
-
-const theEndLight = new THREE.PointLight(0xFFFFFF, 50)
-theEndLight.position.set(801, 4, 0)
-theEndLight.penumbra = 1
-scene.add(theEndLight)
 
 
 // Stored positions of pages + creating lighting targets
 const mainPagePos = new THREE.Vector3(0, 1, 0)
 const mainSpotTarget = new THREE.Object3D();
 mainSpotTarget.position.set(mainPagePos.x, 1, 0)
-mainPagePointLight.target = mainSpotTarget;
+// mainPagePointLight.target = mainSpotTarget;
 scene.add(mainSpotTarget);
 
 const techPagePos = new THREE.Vector3(25, 1, 0)
 const techSpotTarget = new THREE.Object3D();
 techSpotTarget.position.set(techPagePos.x, 1, 0)
-techPagePointLight.target = techSpotTarget;
+// techPagePointLight.target = techSpotTarget;
 scene.add(techSpotTarget);
 
 const projectsPagePos = new THREE.Vector3(50, 0, 0)
 const projectsSpotTarget = new THREE.Object3D();
 projectsSpotTarget.position.set(projectsPagePos.x, 1, 0)
-projectsPagePointLight.target = projectsSpotTarget;
+// projectsPagePointLight.target = projectsSpotTarget;
 scene.add(projectsSpotTarget);
 
 const thankyouPagePos = new THREE.Vector3(250, 0, 0)
 const thankyouSpotTarget = new THREE.Object3D();
 thankyouSpotTarget.position.set(thankyouPagePos.x, 1, 0)
-thankyouPagePointLight.target = thankyouSpotTarget;
+// thankyouPagePointLight.target = thankyouSpotTarget;
 scene.add(thankyouSpotTarget);
 
 
 //Create light helper (shows position of light)
-// const lightHelper = new THREE.PointLightHelper(techPagePointLight)
+// const lightHelper = new THREE.SpotLightHelper(easterEggPointLight)
 // scene.add(lightHelper)
+
+// const lightHelper2 = new THREE.SpotLightHelper(easterEggPointLight2)
+// scene.add(lightHelper2)
 
 
 // Checks which elements mouse is pointing at and returns them in an array
@@ -300,7 +250,7 @@ const getHighlightedElements = (event) => {
     const intersects = raycaster.intersectObjects(scene.children);
 
     for (let i = 0; i < intersects.length; i++) {
-        console.log(intersects)
+
     }
     return intersects
 
@@ -318,11 +268,11 @@ const createText = (textToDisplay, textPosition, fontSize) => {
             const textGeometry = new TextGeometry(textToDisplay, {
                 font: font,
                 size: fontSize,
-                height: 0.2,
+                height: 0.1,
             });
             const textMaterial = [
-                new THREE.MeshToonMaterial({ color: "#87C4FF" }),
-                new THREE.MeshToonMaterial({ color: "#39A7FF" })
+                new THREE.MeshStandardMaterial({ color: "#27c4e6"}),
+                new THREE.MeshStandardMaterial({ color: "#156273" })
             ]
             const textMesh = new THREE.Mesh(textGeometry, textMaterial)
             textMesh.position.set(textPosition.x, textPosition.y, textPosition.z)
@@ -352,7 +302,7 @@ const createTextLoadingScreen = (textToDisplay, textPosition, fontSize) => {
             const textGeometry = new TextGeometry(textToDisplay, {
                 font: font,
                 size: fontSize,
-                height: 0.3,
+                height: 0.1,
             });
             const textMaterial = new THREE.MeshToonMaterial({ color: "#87C4FF" });
             const textMesh = new THREE.Mesh(textGeometry, textMaterial)
@@ -378,10 +328,10 @@ const controlShip = () => {
     document.addEventListener("keypress", (event) => {
         if (event.key === "w") {
             // shipXMomentum += 0.006
-            shipXMomentum += 0.0006
+            shipXMomentum += 0.0003
         } else if (event.key === "s") {
             // shipXMomentum -= 0.006
-            shipXMomentum -= 0.0006
+            shipXMomentum -= 0.0003
         } else if (event.key === "a") {
             shipModel.rotateX(-0.03)
         } else if (event.key === "d") {
@@ -412,15 +362,35 @@ const moveShip = () => {
     }
 
     camera.position.x = shipModel.position.x
-    skyBox.translateX(shipXMomentum)
+    // skyBox.translateX(shipXMomentum)
+    skyBox.position.x = shipModel.position.x
+
+
     if (shipXMomentum > 0.0001) {
         shipXMomentum -= shipXMomentum / 1000
     } else if (shipXMomentum < -0.0001) {
         shipXMomentum -= shipXMomentum / 500
     }
 
+    shipModel.position.y = Math.max(-7.8, Math.min(6.9, shipModel.position.y));
+    // shipModel.position.x = Math.max(-2, Math.min(1500, shipModel.position.x));
+
 }
 
+
+// scene.add( mainShipPointLight.target );
+
+// mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z,)
+
+let mainLightTargetSet = false
+const moveMainShipLight = () => {
+    if (mainLightTargetSet === false) {
+        mainShipPointLight.target = shipModel
+        mainLightTargetSet = true
+    }
+    mainShipPointLight.position.set(camera.position.x, camera.position.y, camera.position.z)
+
+}
 //Audio Controller
 const audioController = () => {
 
@@ -429,9 +399,11 @@ const audioController = () => {
 //Easter egg
 const easterEgg = () => {
     // easterEggPointLight?.lookAt(eggModel.position)
-    easterEggPointLight.position.x = eggModel?.position.x - 20
-    easterEggPointLight2.position.x = eggModel?.position.x + 20
-    if (shipModel.position.x > 660 && shipModel.position.x < 675) {
+    easterEggPointLight.target = eggModel
+    easterEggPointLight2.target = eggModel
+    easterEggPointLight.position.x = eggModel?.position.x - 10
+    easterEggPointLight2.position.x = eggModel?.position.x + 10
+    if (shipModel.position.x > 460 && shipModel.position.x < 495) {
         shipXMomentum = 0.01
     }
     eggModel.rotateY(0.0005)
@@ -498,7 +470,6 @@ const cameraContolsKB = () => {
 const changeElementColor = (event) => {
     const elementsToChange = getHighlightedElements(event)
     for (let i = 0; i < elementsToChange.length; i++) {
-        console.log(elementsToChange[i])
         elementsToChange[i].object.material.color?.set(0xff0000)
     }
 }
@@ -513,17 +484,19 @@ const onMouseMove = (event) => {
 }
 
 const endGame = () => {
-    createText("THE END", {x:800, y:0, z:0}, 1.0)
+    createText("THE END", { x: 800, y: 0, z: 0 }, 1.0)
 }
 
 
 const generateLoadingScreen = () => {
-    createTextLoadingScreen("Loading Please Wait", { x: -3, y: 0.0, z: 0.0 }, 1.0)
+    createTextLoadingScreen("Loading Please Wait...", { x: -3, y: 0.0, z: 0.0 }, 1.0)
 }
 
 const generateMainPage = () => {
     //Title
     createText("Ryan Foster-Hill", mainPagePos, 1.0)
+
+    createText("-->", { x: 8.5, y: -1.7, z: 0 }, 1.0)
 
     // Welcome message
     createText("Hi", { x: 3.3, y: -0.2, z: 0 }, 0.7)
@@ -548,40 +521,40 @@ const generateProjectsPage = () => {
     calcImg.width = 500
     const calcImgObj = new CSS2DObject(calcImg)
     scene.add(calcImgObj)
-    calcImgObj.position.set(65,0,0)
-    createText("React Calculator",{x:60.7,y:-7,z:0} , 1.0)
+    calcImgObj.position.set(65, 0, 0)
+    createText("React Calculator", { x: 60.7, y: -7, z: 0 }, 1.0)
 
     const catsImg = document.createElement('img')
     catsImg.src = "assets/images/Screenshot_cats.png"
     catsImg.width = 1300
     const catsImgObj = new CSS2DObject(catsImg)
     scene.add(catsImgObj)
-    catsImgObj.position.set(85,0,0)
-    createText("React E-Commerce Site",{x:79,y:-7,z:0} , 1.0)
+    catsImgObj.position.set(85, 0, 0)
+    createText("React E-Commerce Site", { x: 79, y: -7, z: 0 }, 1.0)
 
     const musikaImg = document.createElement('img')
     musikaImg.src = "assets/images/Screenshot_musika.png"
     musikaImg.width = 1300
     const musikaImgObj = new CSS2DObject(musikaImg)
     scene.add(musikaImgObj)
-    musikaImgObj.position.set(115,0,0)
-    createText("React Music Website",{x:110,y:-7,z:0} , 1.0)
+    musikaImgObj.position.set(115, 0, 0)
+    createText("React Music Website", { x: 110, y: -7, z: 0 }, 1.0)
 
     const diceImg = document.createElement('img')
     diceImg.src = "assets/images/Screenshot_dicegame.png"
     diceImg.width = 1300
     const diceImgObj = new CSS2DObject(diceImg)
     scene.add(diceImgObj)
-    diceImgObj.position.set(145,0,0)
-    createText("JS Dice Game",{x:142,y:-6,z:0} , 1.0)
+    diceImgObj.position.set(145, 0, 0)
+    createText("JS Dice Game", { x: 142, y: -6, z: 0 }, 1.0)
 
     const sandyImg = document.createElement('img')
     sandyImg.src = "assets/images/Screenshot_sandyandeli.png"
     sandyImg.width = 1400
     const sandyImgObj = new CSS2DObject(sandyImg)
     scene.add(sandyImgObj)
-    sandyImgObj.position.set(175,0,0)
-    createText("Painting and Decorating Site",{x:169,y:-7,z:0} , 1.0)
+    sandyImgObj.position.set(175, 0, 0)
+    createText("Painting and Decorating Site", { x: 169, y: -7, z: 0 }, 1.0)
 
 
     const todoImg = document.createElement('img')
@@ -589,8 +562,8 @@ const generateProjectsPage = () => {
     todoImg.width = 1700
     const todoImgObj = new CSS2DObject(todoImg)
     scene.add(todoImgObj)
-    todoImgObj.position.set(210,0,0)
-    createText("React To-Do List",{x:206,y:-5,z:0} , 1.0)
+    todoImgObj.position.set(210, 0, 0)
+    createText("React To-Do List", { x: 206, y: -5, z: 0 }, 1.0)
 
 
 
@@ -605,6 +578,19 @@ const generateThankyouPage = () => {
 //ADD SHIPS/STARS FLYING FAR IN BACKGROUND
 //Make images clickable and popup html text of site description
 //Add more pages
+// YOUTUBE VIDEO ON PARTICLE EFFECTS FOR SHIP BOOST
+// REDUCE LIGHTING ON MAIN MENU
+// REDUCE POWER OF SPOT LIGHTS
+// DISABLE CAPS LOCK WARNING MESSAGE
+//ADAMS CODE ON DISCORD
+//CHANGE LOADING SCREEN BRIGHTNESS/TEXT
+//CHANGE LIGHTING SO A SINGLE LIGHT IS POINTING FROM THE CAMERA AT THE SHIP, EVERYTHING ELSE IS BLACK INCLUDING BACKGROUND
+//TURN DOWN OR OFF EMISSIVE ON TEXT
+//MAIN SHIP SPOTLIGHT NOT WORKING, SHINING ON MAIN BUT NOT MOVING WITH SHIP?
+//MAYBE MAKE LIGHT FOLOW OVERHEAD OF SHIP
+//ADD SPOTLIGHT ROTATING SOMEWHERE
+//CAN CREATE BLACK HOLE WITH SPOTLIGHT PENUBRA = 10
+
 
 //Setup site functionality
 generateLoadingScreen()
@@ -637,7 +623,7 @@ function animate() {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
 
-        console.log(camera.aspect)
+
 
         //HTML renderer
         labelRenderer.render(scene, camera)
@@ -647,6 +633,7 @@ function animate() {
         rotateCube()
         // rotateCar()
         moveShip()
+        moveMainShipLight()
         easterEgg()
 
 
