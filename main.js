@@ -310,30 +310,31 @@ const controlShip = () => {
             // shipXMomentum += 0.006
             shipXMomentum += 0.0002
             shipModel.add(shipSound)
-            console.log(shipSound.isPlaying)
             if (!shipSound.isPlaying) {
-                console.log("func is running")
                 audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
                     shipSound.setBuffer(buffer);
                     shipSound.setRefDistance(10);
                     shipSound.setLoop(true);
+                    shipSound.setLoopStart(6);
+                    shipSound.setLoopEnd(40);
                     shipSound.setVolume(0.2);
-                    shipSound.duration = 40
                     shipSound.play();
                 });
             }
 
-        } else if (event.key === "s") {
+        }
+
+        if (event.key === "s") {
             // shipXMomentum -= 0.006
             shipXMomentum -= 0.0002
             if (!shipSound.isPlaying) {
-                console.log("func is running")
                 audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
                     shipSound.setBuffer(buffer);
                     shipSound.setRefDistance(10);
                     shipSound.setLoop(true);
+                    shipSound.setLoopStart(6);
+                    shipSound.setLoopEnd(40);
                     shipSound.setVolume(0.2);
-                    shipSound.duration = 40
                     shipSound.play();
                 });
             }
@@ -583,11 +584,8 @@ const generateThankyouPage = () => {
 //Make images clickable and popup html text of site description
 //Add more pages
 
-// DISABLE CAPS LOCK WARNING MESSAGE
+//ADD DISABLE CAPS LOCK WARNING MESSAGE
 //ADD SPOTLIGHT ROTATING SOMEWHERE
-//start ship to left
-
-//READD MUSIC
 
 
 //Setup site functionality
