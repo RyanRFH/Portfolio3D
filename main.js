@@ -106,7 +106,7 @@ modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
     shipModel = gltf.scene
     shipModel.scale.set(0.1, 0.1, 0.1)
     shipModel.position.set(-21.5, -3, 0)
-    // shipModel.position.set(240, -3, 0) //Page editing position
+    // shipModel.position.set(329, -3, 0) //Page editing position
 
     shipModel.rotateY(1.7000000)
     gameIsLoading = false //Turn off loading screen
@@ -119,8 +119,9 @@ let eggModel
 modelLoader.load("assets/models/easter_eggs_2016_-_white__red_-_1/scene.gltf", (gltf) => {
     eggModel = gltf.scene
     scene.add(gltf.scene)
-    eggModel.position.set(500, -1, -10)
-    eggModel.scale.set(350, 350, 350)
+    eggModel.position.set(380, -1, -10)
+    // eggModel.scale.set(350, 350, 350)
+    eggModel.scale.set(0, 0, 0)
 }, undefined, function (error) {
 
 })
@@ -206,7 +207,7 @@ const techPagePos = new THREE.Vector3(25, 1, 0)
 
 const projectsPagePos = new THREE.Vector3(50, 0, 0)
 
-const thankyouPagePos = new THREE.Vector3(250, 0, 0)
+const thankyouPagePos = new THREE.Vector3(300, 0, 0)
 
 
 //Create light helper (shows position of light)
@@ -303,6 +304,16 @@ let shipXMomentum = 0.0
 const shipSoundListener = new THREE.AudioListener();
 const shipSound = new THREE.PositionalAudio(shipSoundListener);
 const audioLoader2 = new THREE.AudioLoader();
+audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
+    shipSound.setBuffer(buffer);
+    shipSound.setRefDistance(10);
+    shipSound.setLoop(true);
+    shipSound.setLoopStart(6);
+    shipSound.setLoopEnd(38.5);
+    shipSound.setVolume(0.1);
+    shipSound.setPlaybackRate(0.9)
+});
+
 
 const controlShip = () => {
     document.addEventListener("keypress", (event) => {
@@ -311,32 +322,15 @@ const controlShip = () => {
             shipXMomentum += 0.0002
             shipModel.add(shipSound)
             if (!shipSound.isPlaying) {
-                audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
-                    shipSound.setBuffer(buffer);
-                    shipSound.setRefDistance(10);
-                    shipSound.setLoop(true);
-                    shipSound.setLoopStart(6);
-                    shipSound.setLoopEnd(40);
-                    shipSound.setVolume(0.2);
-                    shipSound.play();
-                });
+                shipSound.play();
             }
-
         }
 
         if (event.key === "s") {
             // shipXMomentum -= 0.006
             shipXMomentum -= 0.0002
             if (!shipSound.isPlaying) {
-                audioLoader2.load('assets/sounds/hover-engine-6391.mp3', function (buffer) {
-                    shipSound.setBuffer(buffer);
-                    shipSound.setRefDistance(10);
-                    shipSound.setLoop(true);
-                    shipSound.setLoopStart(6);
-                    shipSound.setLoopEnd(40);
-                    shipSound.setVolume(0.2);
-                    shipSound.play();
-                });
+                shipSound.play();
             }
         } else if (event.key === "a") {
             shipModel.rotateX(-0.03)
@@ -387,11 +381,6 @@ const moveMainShipLight = () => {
 }
 
 
-//Audio Controller
-const audioController = () => {
-
-}
-
 //Easter egg
 const easterEgg = () => {
     if (eggModel) {
@@ -400,13 +389,67 @@ const easterEgg = () => {
         easterEggPointLight2.target = eggModel
         easterEggPointLight.position.x = eggModel?.position.x - 10
         easterEggPointLight2.position.x = eggModel?.position.x + 10
-        if (shipModel.position.x > 460 && shipModel.position.x < 495) {
-            shipXMomentum = 0.01
-        }
+        // if (shipModel.position.x > 460 && shipModel.position.x < 495) {
+        //     shipXMomentum = 0.01
+        // }
 
         eggModel.rotateY(0.0005)
     }
 
+}
+
+
+const alarmSoundListener = new THREE.AudioListener();
+const alarmSound = new THREE.Audio(alarmSoundListener);
+const audioLoader3 = new THREE.AudioLoader();
+audioLoader3.load('assets/sounds/security-alarm-80493.mp3', function (buffer) {
+    alarmSound.setBuffer(buffer);
+    alarmSound.setVolume(0.05);
+});
+
+const spaceAmbienceSound = new THREE.Audio(alarmSoundListener);
+audioLoader3.load('assets/sounds/deep-space-ambiance-48854.mp3', function (buffer) {
+    spaceAmbienceSound.setBuffer(buffer);
+    spaceAmbienceSound.setVolume(1);
+});
+
+//Black hole
+const blackHoleEndGame = () => {
+
+    if (shipModel.position.x > 330) {
+        bgMusicSound.pause()
+
+        mainShipSpotLight.penumbra -= 0.0003
+        mainShipSpotLight.angle -= 0.0003
+
+        if (!alarmSound.isPlaying) {
+            alarmSound.play();
+        }
+
+        if (mainShipSpotLight.angle <= 0.0) {
+
+            mainShipSpotLight.penumbra = -1.0
+            alarmSound.pause()
+            if (!spaceAmbienceSound.isPlaying) {
+
+                spaceAmbienceSound.play()
+            }
+
+            eggModel.translateZ(0.5)
+            eggModel.lookAt(shipModel.position.x, 0, -1000)
+
+            shipModel.translateZ(0.5)
+            shipModel.lookAt(shipModel.position.x, 0, -1000)
+
+            if (mainShipSpotLight.angle <= -1.0) {
+                mainShipSpotLight.penumbra = -1.0
+                mainShipSpotLight.angle = -1.0
+            }
+        }
+
+
+
+    }
 }
 
 //Controls cube movement
@@ -483,10 +526,6 @@ const onMouseMove = (event) => {
 
 }
 
-const endGame = () => {
-    createText("THE END", { x: 800, y: 0, z: 0 }, 1.0)
-}
-
 
 const generateLoadingScreen = () => {
     createTextLoadingScreen("Loading Please Wait...", { x: -3, y: 0.0, z: 0.0 }, 1.0)
@@ -528,40 +567,47 @@ const generateProjectsPage = () => {
     calcImg.width = 500
     const calcImgObj = new CSS2DObject(calcImg)
     scene.add(calcImgObj)
-    calcImgObj.position.set(65, 0, 0)
-    createText("React Calculator", { x: 60.7, y: -7, z: 0 }, 1.0)
+    calcImgObj.position.set(75, 0, 0)
+    createText("React Calculator", { x: 70.7, y: -7, z: 0 }, 1.0)
+    // createText("[Click image to see details]", { x: 71.5, y: -7.7, z: 0 }, 0.5)
+    calcImg.addEventListener("mousedown", (event) => {
+        // mainShipSpotLight.intensity = !mainShipSpotLight.intensity
+        // mainShipSpotLight.penumbra = 100
+        console.log(event)
+    })
+
 
     const catsImg = document.createElement('img')
     catsImg.src = "assets/images/Screenshot_cats.png"
     catsImg.width = 1300
     const catsImgObj = new CSS2DObject(catsImg)
     scene.add(catsImgObj)
-    catsImgObj.position.set(85, 0, 0)
-    createText("React E-Commerce Site", { x: 79, y: -7, z: 0 }, 1.0)
+    catsImgObj.position.set(105, 0, 0)
+    createText("React E-Commerce Site", { x: 99, y: -7, z: 0 }, 1.0)
 
     const musikaImg = document.createElement('img')
     musikaImg.src = "assets/images/Screenshot_musika.png"
     musikaImg.width = 1300
     const musikaImgObj = new CSS2DObject(musikaImg)
     scene.add(musikaImgObj)
-    musikaImgObj.position.set(115, 0, 0)
-    createText("React Music Website", { x: 110, y: -7, z: 0 }, 1.0)
+    musikaImgObj.position.set(145, 0, 0)
+    createText("React Music Website", { x: 140, y: -7, z: 0 }, 1.0)
 
     const diceImg = document.createElement('img')
     diceImg.src = "assets/images/Screenshot_dicegame.png"
     diceImg.width = 1300
     const diceImgObj = new CSS2DObject(diceImg)
     scene.add(diceImgObj)
-    diceImgObj.position.set(145, 0, 0)
-    createText("JS Dice Game", { x: 142, y: -6, z: 0 }, 1.0)
+    diceImgObj.position.set(185, 0, 0)
+    createText("JS Dice Game", { x: 182, y: -6, z: 0 }, 1.0)
 
     const sandyImg = document.createElement('img')
     sandyImg.src = "assets/images/Screenshot_sandyandeli.png"
     sandyImg.width = 1400
     const sandyImgObj = new CSS2DObject(sandyImg)
     scene.add(sandyImgObj)
-    sandyImgObj.position.set(175, 0, 0)
-    createText("Painting and Decorating Site", { x: 169, y: -7, z: 0 }, 1.0)
+    sandyImgObj.position.set(225, 0, 0)
+    createText("Painting and Decorating Site", { x: 219, y: -7, z: 0 }, 1.0)
 
 
     const todoImg = document.createElement('img')
@@ -569,8 +615,8 @@ const generateProjectsPage = () => {
     todoImg.width = 1700
     const todoImgObj = new CSS2DObject(todoImg)
     scene.add(todoImgObj)
-    todoImgObj.position.set(210, 0, 0)
-    createText("React To-Do List", { x: 206, y: -5, z: 0 }, 1.0)
+    todoImgObj.position.set(270, 0, 0)
+    createText("React To-Do List", { x: 266, y: -5, z: 0 }, 1.0)
 
 
 
@@ -578,15 +624,14 @@ const generateProjectsPage = () => {
 }
 
 const generateThankyouPage = () => {
-    createText("Thankyou for playing!", thankyouPagePos, 1.0)
+    createText("Thankyou for playing! -->", thankyouPagePos, 1.0)
 }
 
 //Make images clickable and popup html text of site description
 //Add more pages
 
 //ADD DISABLE CAPS LOCK WARNING MESSAGE
-//ADD SPOTLIGHT ROTATING SOMEWHERE
-
+//FINISH CLICKABLE IMAGE DESCRIPTIONS
 
 //Setup site functionality
 generateLoadingScreen()
@@ -598,7 +643,6 @@ generateMainPage()
 generateTechPage()
 generateProjectsPage()
 generateThankyouPage()
-endGame()
 controlShip()
 
 
@@ -621,10 +665,8 @@ function animate() {
         renderer.render(scene, camera);
 
 
-
         //HTML renderer
         labelRenderer.render(scene, camera)
-
 
         rotateSphere()
         rotateCube()
@@ -632,7 +674,7 @@ function animate() {
         moveShip()
         moveMainShipLight()
         easterEgg()
-
+        blackHoleEndGame()
 
     }
 
