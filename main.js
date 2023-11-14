@@ -24,16 +24,6 @@ const threejsCanvas = document.querySelector('.webgl')
 //Load textures
 const textureLoader = new THREE.TextureLoader()
 
-// const backgroundTexture = textureLoader.load('assets/textures/Lava_005_SD/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner.jpg')
-
-
-// const fontTexture = textureLoader.load('assets/textures/cloth-textile-texture-background-close-up-fabric-83992189.jpg')
-// const fontDisplacement = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_DISP.png')
-// const fontNormal = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_NORM.jpg')
-// const fontOcclusion = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_OCC.jpg')
-// const fontSpec = textureLoader.load('assets/textures/White_Marble_005_SD/Abstract_004_SPEC.jpg')
-// const fontHeight = textureLoader.load('assets/textures/White_Marble_005_SD/Marble_White_005_height.png')
-// const fontRoughness = textureLoader.load('assets/textures/White_Marble_005_SD/White_Marble_005_ROUGH.jpg')
 
 let skyBoxMaterialArray = []
 const skyBoxTextureFT = textureLoader.load("assets/textures/ulukai/corona_ft.png")
@@ -55,12 +45,6 @@ const cubeMetal = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/
 const cubeRoughness = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_roughness.jpg')
 const cubeEmissive = textureLoader.load('assets/textures/Sci_fi_Metal_Panel_004_SD/Sci_fi_Metal_Panel_004_emissive.jpg')
 
-const sphereTexture = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_COLOR.jpg')
-const sphereNormal = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_NORM.jpg')
-const sphereRoughness = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_ROUGH.jpg')
-const sphereDisplacement = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_DISP.png')
-const sphereAO = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_OCC.jpg')
-const sphereAlpha = textureLoader.load('assets/textures/Lava_005_SD/Lava_005_MASK.jpg')
 
 //Handles loading screen
 let gameIsLoading = true;
@@ -115,17 +99,6 @@ modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
 
 })
 
-let eggModel
-modelLoader.load("assets/models/easter_eggs_2016_-_white__red_-_1/scene.gltf", (gltf) => {
-    eggModel = gltf.scene
-    scene.add(gltf.scene)
-    eggModel.position.set(380, -1, -10)
-    // eggModel.scale.set(350, 350, 350)
-    eggModel.scale.set(0, 0, 0)
-}, undefined, function (error) {
-
-})
-
 //Create sky box
 const skyBoxGeometry = new THREE.BoxGeometry(1000, 1000, 1000)
 const skyBox = new THREE.Mesh(skyBoxGeometry, skyBoxMaterialArray)
@@ -142,15 +115,6 @@ cube.position.y = cubeInitialPos.y
 cube.position.z = cubeInitialPos.z
 cube.rotateZ(0.3)
 scene.add(cube);
-
-
-//Create sphere
-const sphereGeometry = new THREE.SphereGeometry(8)
-const sphereMaterial = new THREE.MeshStandardMaterial({ map: sphereTexture, normalMap: sphereNormal, displacementMap: sphereDisplacement, roughnessMap: sphereRoughness, aoMap: sphereAO, alphaMap: sphereAlpha })
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
-sphere.position.set(100, 30, -100)
-scene.add(sphere)
-
 
 //Move camera into initial position
 camera.position.set(5, -0.5, 10);
@@ -418,23 +382,6 @@ const bgColourControl = () => {
 
 }
 
-//Easter egg
-const easterEgg = () => {
-    if (eggModel) {
-        // easterEggPointLight?.lookAt(eggModel.position)
-        easterEggPointLight.target = eggModel
-        easterEggPointLight2.target = eggModel
-        easterEggPointLight.position.x = eggModel?.position.x - 10
-        easterEggPointLight2.position.x = eggModel?.position.x + 10
-        // if (shipModel.position.x > 460 && shipModel.position.x < 495) {
-        //     shipXMomentum = 0.01
-        // }
-
-        eggModel.rotateY(0.0005)
-    }
-
-}
-
 
 const alarmSoundListener = new THREE.AudioListener();
 const alarmSound = new THREE.Audio(alarmSoundListener);
@@ -489,6 +436,7 @@ const blackHoleEndGame = () => {
     }
 }
 
+
 //Controls cube movement
 const rotateCube = () => {
     cube.rotateX(-0.0004)
@@ -498,24 +446,6 @@ const rotateCube = () => {
         cube.position.y = cubeInitialPos.y
         cube.position.z = cubeInitialPos.z
     }
-}
-
-
-//Controls sphere movement
-const rotateSphere = () => {
-    sphere.rotateX(-0.0001)
-    sphere.translateX(-0.00005)
-}
-
-
-//Controls car movement
-const rotateCar = () => {
-    if (carModel) {
-        carModel.rotateX(0.0008)
-        carModel.rotateY(-0.0008)
-        carModel.translateX(0.0008)
-    }
-
 }
 
 
@@ -729,7 +659,6 @@ function animate() {
         renderer.setSize(window.innerWidth, window.innerHeight)
         renderer.render(loadingScreenScene, camera);
     } else {
-
         // handleCameraRotation(camera, cameraOrientationState);
 
         //Auto update screens size/camera aspect ratio
@@ -746,12 +675,10 @@ function animate() {
         //HTML renderer
         labelRenderer.render(scene, camera)
 
-        rotateSphere()
+
         rotateCube()
-        // rotateCar()
         moveShip()
         moveMainShipLight()
-        easterEgg()
         blackHoleEndGame()
         bgColourControl()
     }
