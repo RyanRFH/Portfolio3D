@@ -106,7 +106,7 @@ modelLoader.load("assets/models/stylised_spaceship/scene.gltf", (gltf) => {
     shipModel = gltf.scene
     shipModel.scale.set(0.1, 0.1, 0.1)
     shipModel.position.set(-21.5, -3, 0)
-    // shipModel.position.set(329, -3, 0) //Page editing position
+    // shipModel.position.set(290, -3, 0) //Page editing position
 
     shipModel.rotateY(1.7000000)
     gameIsLoading = false //Turn off loading screen
@@ -380,6 +380,43 @@ const moveMainShipLight = () => {
 
 }
 
+let lightStage = 0
+const bgColourControl = () => {
+    if (lightStage === 0) {
+        mainShipSpotLight.color.b += 0.0003
+        if (mainShipSpotLight.color.b >= 5.0) {
+            lightStage = 1
+        }
+
+    } else if (lightStage === 1) {
+        mainShipSpotLight.color.r += 0.0003
+        if (mainShipSpotLight.color.r >= 5.0) {
+            lightStage = 2
+        }
+
+    } else if (lightStage === 2) {
+        mainShipSpotLight.color.b -= 0.0003
+        if (mainShipSpotLight.color.b <= 1.0) {
+            lightStage = 3
+        }
+
+    } else if (lightStage === 3) {
+        mainShipSpotLight.color.r -= 0.0003
+
+        if (mainShipSpotLight.color.r <= 1.0) {
+            lightStage = 0
+        }
+    }
+
+
+
+
+
+
+
+
+
+}
 
 //Easter egg
 const easterEgg = () => {
@@ -560,7 +597,10 @@ const generateTechPage = () => {
 
 }
 
+let testText = createText("[Click image to see details]", { x: 71.5, y: -7.7, z: 0 }, 0.5)
 const generateProjectsPage = () => {
+
+
     createText("Projects ->", projectsPagePos, 1.0)
     const calcImg = document.createElement('img')
     calcImg.src = "assets/images/Screenshot_calculator.png"
@@ -569,11 +609,12 @@ const generateProjectsPage = () => {
     scene.add(calcImgObj)
     calcImgObj.position.set(75, 0, 0)
     createText("React Calculator", { x: 70.7, y: -7, z: 0 }, 1.0)
-    // createText("[Click image to see details]", { x: 71.5, y: -7.7, z: 0 }, 0.5)
+    createText("[Click image to see details]", { x: 71.5, y: -7.7, z: 0 }, 0.5)
     calcImg.addEventListener("mousedown", (event) => {
-        // mainShipSpotLight.intensity = !mainShipSpotLight.intensity
-        // mainShipSpotLight.penumbra = 100
-        console.log(event)
+        createText("Fully functional calculator", { x: 79.5, y: 1, z: 0 }, 0.7)
+        createText("thorough error checking", { x: 79.5, y: -1, z: 0 }, 0.7)
+        createText("+", { x: 83.5, y: -1.8, z: 0 }, 0.7)
+        createText("error handling", { x: 81.2, y: -2.6, z: 0 }, 0.7)
     })
 
 
@@ -584,6 +625,14 @@ const generateProjectsPage = () => {
     scene.add(catsImgObj)
     catsImgObj.position.set(105, 0, 0)
     createText("React E-Commerce Site", { x: 99, y: -7, z: 0 }, 1.0)
+    createText("[Click image to see details]", { x: 101, y: -7.7, z: 0 }, 0.5)
+    catsImg.addEventListener("mousedown", (event) => {
+        createText("Features:", { x: 116.5, y: 2, z: 0 }, 0.7)
+        createText("searching", { x: 116.5, y: 0.5, z: 0 }, 0.7)
+        createText("Uses various APIs to generate data", { x: 116.5, y: -1, z: 0 }, 0.7)
+        createText("Results sorting", { x: 116.5, y: -2.5, z: 0 }, 0.7)
+        createText("Basket system", { x: 116.5, y: -4, z: 0 }, 0.7)
+    })
 
     const musikaImg = document.createElement('img')
     musikaImg.src = "assets/images/Screenshot_musika.png"
@@ -592,6 +641,15 @@ const generateProjectsPage = () => {
     scene.add(musikaImgObj)
     musikaImgObj.position.set(145, 0, 0)
     createText("React Music Website", { x: 140, y: -7, z: 0 }, 1.0)
+    createText("[Click image to see details]", { x: 141.5, y: -7.7, z: 0 }, 0.5)
+    musikaImg.addEventListener("mousedown", (event) => {
+        createText("Full stack project", { x: 156, y: 1, z: 0 }, 0.7)
+        createText("Backend used to store user data", { x: 156, y: 0, z: 0 }, 0.7)
+        createText("Connects to Spotify API for searching", { x: 156, y: -1, z: 0 }, 0.7)
+        createText("Persistent radio player throughout site", { x: 156, y: -2, z: 0 }, 0.7)
+        createText("news/events personalized to user", { x: 156, y: -3, z: 0 }, 0.7)
+    })
+
 
     const diceImg = document.createElement('img')
     diceImg.src = "assets/images/Screenshot_dicegame.png"
@@ -600,6 +658,14 @@ const generateProjectsPage = () => {
     scene.add(diceImgObj)
     diceImgObj.position.set(185, 0, 0)
     createText("JS Dice Game", { x: 182, y: -6, z: 0 }, 1.0)
+    createText("[Click image to see details]", { x: 181.6, y: -7, z: 0 }, 0.5)
+    diceImg.addEventListener("mousedown", (event) => {
+        createText("Dynamic design", { x: 196, y: 1, z: 0 }, 0.7)
+        createText("allowing unlimited", { x: 196, y: 0, z: 0 }, 0.7)
+        createText("amount of players", { x: 196, y: -1, z: 0 }, 0.7)
+    })
+
+
 
     const sandyImg = document.createElement('img')
     sandyImg.src = "assets/images/Screenshot_sandyandeli.png"
@@ -608,6 +674,13 @@ const generateProjectsPage = () => {
     scene.add(sandyImgObj)
     sandyImgObj.position.set(225, 0, 0)
     createText("Painting and Decorating Site", { x: 219, y: -7, z: 0 }, 1.0)
+    createText("[Click image to see details]", { x: 222, y: -7.7, z: 0 }, 0.5)
+    sandyImg.addEventListener("mousedown", (event) => {
+        createText("painting and decorating review site", { x: 237, y: 1, z: 0 }, 0.7)
+        createText("Utilizes bootstrap", { x: 237, y: 0, z: 0 }, 0.7)
+    })
+
+
 
 
     const todoImg = document.createElement('img')
@@ -617,7 +690,11 @@ const generateProjectsPage = () => {
     scene.add(todoImgObj)
     todoImgObj.position.set(270, 0, 0)
     createText("React To-Do List", { x: 266, y: -5, z: 0 }, 1.0)
-
+    createText("[Click image to see details]", { x: 266.6, y: -6, z: 0 }, 0.5)
+    todoImg.addEventListener("mousedown", (event) => {
+        createText("Simple design", { x: 284.5, y: 0, z: 0 }, 0.7)
+        createText("Colour coded UI", { x: 284.5, y: -1, z: 0 }, 0.7)
+    })
 
 
 
@@ -652,6 +729,7 @@ function animate() {
         renderer.setSize(window.innerWidth, window.innerHeight)
         renderer.render(loadingScreenScene, camera);
     } else {
+
         // handleCameraRotation(camera, cameraOrientationState);
 
         //Auto update screens size/camera aspect ratio
@@ -675,7 +753,7 @@ function animate() {
         moveMainShipLight()
         easterEgg()
         blackHoleEndGame()
-
+        bgColourControl()
     }
 
 }
