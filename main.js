@@ -144,6 +144,7 @@ loadingScreenScene.add(loadingScreenPointLight)
 // scene.add(wholeSceneLight)
 
 const mainShipSpotLight = new THREE.SpotLight(0xFFFFFF, 10, 0, 1)
+mainShipSpotLight.color.r = 0.0003
 mainShipSpotLight.position.set(0, 0, 0)
 mainShipSpotLight.penumbra = 1
 mainShipSpotLight.decay = 0.0
@@ -346,26 +347,28 @@ const moveMainShipLight = () => {
 
 let lightStage = 0
 const bgColourControl = () => {
+
+    console.log(mainShipSpotLight.color)
     if (lightStage === 0) {
-        mainShipSpotLight.color.b += 0.0003
+        mainShipSpotLight.color.b += 0.001
         if (mainShipSpotLight.color.b >= 5.0) {
             lightStage = 1
         }
 
     } else if (lightStage === 1) {
-        mainShipSpotLight.color.r += 0.0003
+        mainShipSpotLight.color.r += 0.001
         if (mainShipSpotLight.color.r >= 5.0) {
             lightStage = 2
         }
 
     } else if (lightStage === 2) {
-        mainShipSpotLight.color.b -= 0.0003
+        mainShipSpotLight.color.b -= 0.001
         if (mainShipSpotLight.color.b <= 1.0) {
             lightStage = 3
         }
 
     } else if (lightStage === 3) {
-        mainShipSpotLight.color.r -= 0.0003
+        mainShipSpotLight.color.r -= 0.001
 
         if (mainShipSpotLight.color.r <= 1.0) {
             lightStage = 0
@@ -418,9 +421,6 @@ const blackHoleEndGame = () => {
 
                 spaceAmbienceSound.play()
             }
-
-            eggModel.translateZ(0.5)
-            eggModel.lookAt(shipModel.position.x, 0, -1000)
 
             shipModel.translateZ(0.5)
             shipModel.lookAt(shipModel.position.x, 0, -1000)
